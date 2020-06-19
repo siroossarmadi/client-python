@@ -10,11 +10,11 @@ class Key:
 
 
 class Object:
-    def __init__(self, key: Key, value=None, meta=None):
+    def __init__(self, key: Key, value=''):
         self.Key = key
         self.Value = value
-        self.Meta = meta
+        self.Meta = ''
 
     @classmethod
     def from_dict(cls, data: dict):
-        return cls(Key.from_dict(data['Key']), data['Value'], data['Meta'])
+        return cls(Key.from_dict(data['Key']), data['Value'])
