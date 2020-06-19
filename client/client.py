@@ -41,7 +41,7 @@ class Client():
                                     header=[self.ws_header])
                 except:
                     time.sleep(2)
-                    print('reconnecting...')
+                    # print('reconnecting...')
                 else:
                     break
             while True:
@@ -50,7 +50,7 @@ class Client():
                     result = json.loads(json_result)
                     self.callback(Object.from_dict(result))
                 except:
-                    print('reconnecting...')
+                    # print('reconnecting...')
                     break
 
     def get_url(self, endpoint):
