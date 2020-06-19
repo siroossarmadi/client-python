@@ -7,7 +7,7 @@ import time
 import requests
 import websocket
 
-from objects import Key, Object
+from .objects import Key, Object
 
 
 class ResponseError(Exception):
