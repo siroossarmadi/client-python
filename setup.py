@@ -10,7 +10,7 @@ setup(
     version='0.1.0',
     packages=find_packages(),
     license='MIT',
-    required=[
+    install_requires=[
         "requests==2.23.0",
         "websocket-client==0.57.0"
     ]
