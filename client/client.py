@@ -1,8 +1,9 @@
 
 import json
 import os
-from multiprocessing import Process
+import sys
 import time
+from multiprocessing import Process
 
 import requests
 import websocket
@@ -20,7 +21,7 @@ class Client():
         self.host = os.getenv('GIMULATOR_HOST')
         if self.host is None:
             raise EnvironmentError
-        self.id = os.getenv('GIMULATOR_ID')
+        self.id = os.getenv('CLIENT_ID')
         if self.id is None:
             raise EnvironmentError
 
@@ -39,9 +40,10 @@ class Client():
                 try:
                     self.ws.connect(url=self.get_url('socket'),
                                     header=[self.ws_header])
+                except ConnectionRefusedError:
+                    self.p.terminate()
                 except:
                     time.sleep(2)
-                    # print('reconnecting...')
                 else:
                     break
             while True:
@@ -49,8 +51,10 @@ class Client():
                     json_result = self.ws.recv()
                     result = json.loads(json_result)
                     self.callback(Object.from_dict(result))
+                except KeyboardInterrupt:
+                    self.p.terminate()
+                    sys.exit(0)
                 except:
-                    # print('reconnecting...')
                     break
 
     def get_url(self, endpoint):
